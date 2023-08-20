@@ -1,0 +1,10 @@
+.gambarkat{
+	 width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+.gambarmetode{
+     width: auto;
+    height: 300px;
+}
+
