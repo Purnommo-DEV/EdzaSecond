@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jul 27, 2022 at 09:08 AM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 7.4.16
+-- Host: 127.0.0.1
+-- Generation Time: Dec 23, 2023 at 12:09 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.1.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,11 +29,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -45,9 +45,9 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `kategoris` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `namakat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gambarkat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `namakat` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `gambarkat` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -70,9 +70,9 @@ CREATE TABLE `keranjang` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `produk_id` bigint(20) UNSIGNED NOT NULL,
-  `kuantitas` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `berat_produk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `harga_produk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kuantitas` varchar(255) NOT NULL,
+  `berat_produk` varchar(255) NOT NULL,
+  `harga_produk` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -85,7 +85,7 @@ CREATE TABLE `keranjang` (
 
 CREATE TABLE `kota` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(255) NOT NULL,
   `provinsi_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -606,10 +606,10 @@ INSERT INTO `kota` (`id`, `nama`, `provinsi_id`, `created_at`, `updated_at`) VAL
 
 CREATE TABLE `metodes` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `namametode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gambarmetode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `namapemilik` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `norekening` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `namametode` varchar(255) NOT NULL,
+  `gambarmetode` varchar(255) NOT NULL,
+  `namapemilik` varchar(255) NOT NULL,
+  `norekening` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -622,7 +622,7 @@ CREATE TABLE `metodes` (
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -650,7 +650,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (30, '2022_07_26_145207_add_kolom_status_verifikasi', 5),
 (31, '2022_07_26_230500_add_resi_table', 6),
 (32, '2022_07_26_231041_create_transfer_pembayaran_table', 7),
-(33, '2022_07_26_231601_add_kolom_status_verifikasi', 8);
+(33, '2022_07_26_231601_add_kolom_status_verifikasi', 8),
+(34, '2022_07_28_134912_create_slider_table', 9);
 
 -- --------------------------------------------------------
 
@@ -659,8 +660,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -672,11 +673,11 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -691,12 +692,12 @@ CREATE TABLE `personal_access_tokens` (
 CREATE TABLE `pesanan` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `total_berat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `total_bayar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ongkos_kirim` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `metode_pembayaran` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status_pesanan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `resi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_berat` varchar(255) NOT NULL,
+  `total_bayar` varchar(255) NOT NULL,
+  `ongkos_kirim` varchar(255) NOT NULL,
+  `metode_pembayaran` varchar(255) NOT NULL,
+  `status_pesanan` varchar(255) NOT NULL,
+  `resi` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -710,7 +711,7 @@ CREATE TABLE `pesanan` (
 CREATE TABLE `pesanan_logs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `pesanan_id` bigint(20) UNSIGNED NOT NULL,
-  `pesanan_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pesanan_status` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -741,7 +742,7 @@ CREATE TABLE `pesanan_produk` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `pesanan_id` bigint(20) UNSIGNED NOT NULL,
   `produk_id` bigint(20) UNSIGNED NOT NULL,
-  `kuantitas` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kuantitas` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -754,19 +755,19 @@ CREATE TABLE `pesanan_produk` (
 
 CREATE TABLE `produk` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `namaproduk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `namaproduk` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
   `kategoris_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `harga` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `diskon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `berat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deskripsi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `stok` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gambarproduk1` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gambarproduk2` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gambarproduk3` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gambarproduk4` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `harga` varchar(255) NOT NULL,
+  `diskon` varchar(255) DEFAULT NULL,
+  `berat` varchar(255) NOT NULL,
+  `deskripsi` varchar(255) NOT NULL,
+  `stok` varchar(255) DEFAULT NULL,
+  `gambarproduk1` varchar(255) NOT NULL,
+  `gambarproduk2` varchar(255) NOT NULL,
+  `gambarproduk3` varchar(255) NOT NULL,
+  `gambarproduk4` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -788,7 +789,7 @@ INSERT INTO `produk` (`id`, `namaproduk`, `slug`, `kategoris_id`, `harga`, `disk
 
 CREATE TABLE `provinsi` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -836,6 +837,21 @@ INSERT INTO `provinsi` (`id`, `nama`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `slider`
+--
+
+CREATE TABLE `slider` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `judul` text NOT NULL,
+  `teks` text NOT NULL,
+  `gambar_slider` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `transfer_pembayaran`
 --
 
@@ -843,8 +859,8 @@ CREATE TABLE `transfer_pembayaran` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `pesanan_id` bigint(20) UNSIGNED NOT NULL,
-  `bukti_bayar` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status_verifikasi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bukti_bayar` text NOT NULL,
+  `status_verifikasi` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -857,16 +873,16 @@ CREATE TABLE `transfer_pembayaran` (
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alamat` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `alamat` text NOT NULL,
   `provinsi_id` bigint(20) UNSIGNED NOT NULL,
   `kota_id` bigint(20) UNSIGNED NOT NULL,
   `nomor_hp` bigint(20) UNSIGNED NOT NULL,
-  `peran` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `peran` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -975,6 +991,12 @@ ALTER TABLE `provinsi`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `slider`
+--
+ALTER TABLE `slider`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `transfer_pembayaran`
 --
 ALTER TABLE `transfer_pembayaran`
@@ -1029,7 +1051,7 @@ ALTER TABLE `metodes`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -1066,6 +1088,12 @@ ALTER TABLE `produk`
 --
 ALTER TABLE `provinsi`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT for table `slider`
+--
+ALTER TABLE `slider`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `transfer_pembayaran`
